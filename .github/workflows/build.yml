@@ -1,0 +1,51 @@
+name: Build
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Build plugin
+        run: python3 build.py
+      
+      - name: Verify XPI
+        run: |
+          if [ -f dist/zotero-jisedigi-api-1.0.0.xpi ]; then
+            echo "✓ XPI file created successfully"
+            ls -lh dist/zotero-jisedigi-api-1.0.0.xpi
+          else
+            echo "✗ XPI file not found"
+            exit 1
+          fi
+      
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: build-artifacts
+          path: |
+            dist/
+            build/
+          retention-days: 30
+      
+      - name: Upload XPI package
+        uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: xpi-package
+          path: 'dist/*.xpi'
+          retention-days: 90
