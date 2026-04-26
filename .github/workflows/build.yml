@@ -1,4 +1,4 @@
-name: Build & Test
+name: Build & Test (Node 24)
 
 on:
   push:
@@ -10,28 +10,24 @@ jobs:
   build:
     runs-on: ubuntu-latest
     
-    strategy:
-      matrix:
-        node-version: ['24.x', '22.x']
-    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       
-      - name: Setup Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js 24.x
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: '24.x'
           cache: 'npm'
       
       - name: Install dependencies
-        run: npm install || true
+        run: npm install
       
       - name: Run linter
         run: npm run lint || true
       
       - name: Build plugin
-        run: npm run build || true
+        run: npm run build
       
       - name: Run tests
         run: npm test || true
@@ -40,7 +36,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: build-artifacts-node-${{ matrix.node-version }}
+          name: build-artifacts-node24
           path: |
             dist/
             build/
@@ -49,7 +45,7 @@ jobs:
       
       - name: Upload XPI package
         uses: actions/upload-artifact@v4
-        if: success() && matrix.node-version == '24.x'
+        if: success()
         with:
           name: xpi-package
           path: '*.xpi'

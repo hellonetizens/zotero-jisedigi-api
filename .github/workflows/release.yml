@@ -1,4 +1,4 @@
-name: Release
+name: Release (Node 24)
 
 on:
   push:
@@ -20,10 +20,10 @@ jobs:
           cache: 'npm'
       
       - name: Install dependencies
-        run: npm install || true
+        run: npm install
       
       - name: Build plugin
-        run: npm run build || true
+        run: npm run build
       
       - name: Run tests
         run: npm test || true
@@ -35,7 +35,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          name: Release ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }} (Node 24)
           draft: false
           prerelease: ${{ contains(github.ref, 'beta') || contains(github.ref, 'alpha') }}
           files: |
