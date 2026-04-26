@@ -1,6 +1,6 @@
 {
   "name": "zotero-jisedigi-api",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Zotero plugin for JPS WebAPI entity lookup integration",
   "main": "src/bootstrap.js",
   "scripts": {
