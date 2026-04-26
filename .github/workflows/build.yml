@@ -10,14 +10,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       
-      - name: Setup Python
+      - name: Setup Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: ${{ matrix.python-version }}
       
       - name: Build plugin
         run: python3 build.py
@@ -36,7 +40,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: build-artifacts
+          name: build-artifacts-python-${{ matrix.python-version }}
           path: |
             dist/
             build/
@@ -44,7 +48,7 @@ jobs:
       
       - name: Upload XPI package
         uses: actions/upload-artifact@v4
-        if: success()
+        if: success() && matrix.python-version == '3.12'
         with:
           name: xpi-package
           path: 'dist/*.xpi'
