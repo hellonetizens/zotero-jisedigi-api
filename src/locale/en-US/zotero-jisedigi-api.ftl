@@ -1,0 +1,11 @@
+query-jisedigi-apis = Query Jisedigi APIs
+query-books = Search Books
+query-illustrations = Search Illustrations
+query-pages = Search Pages
+query-random = Get Random Illustration
+query-metadata = Get Book Metadata
+api-querying = Querying Jisedigi API...
+api-processing = Processing results...
+api-success = Query completed successfully
+api-error = Error querying API
+api-no-results = No results found

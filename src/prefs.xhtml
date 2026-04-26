@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://zotero/skin/preferences.css" type="text/css"?>
+
+<prefwindow id="zotero-jisedigi-api-preferences"
+    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    title="Zotero Jisedigi API Preferences">
+
+    <prefpane id="zotero-jisedigi-api-pref-pane" label="Zotero Jisedigi API">
+        <preferences>
+            <preference id="zoteroJisedigiApi.baseUrl" name="zoteroJisedigiApi.baseUrl" type="string"/>
+            <preference id="zoteroJisedigiApi.defaultLimit" name="zoteroJisedigiApi.defaultLimit" type="int"/>
+            <preference id="zoteroJisedigiApi.autoCreateItems" name="zoteroJisedigiApi.autoCreateItems" type="bool"/>
+        </preferences>
+
+        <vbox flex="1">
+            <groupbox>
+                <caption label="API Configuration"/>
+                <vbox>
+                    <hbox align="center">
+                        <label value="Base URL:" control="baseUrl" style="width: 150px;"/>
+                        <textbox id="baseUrl" preference="zoteroJisedigiApi.baseUrl" 
+                                 placeholder="https://lab.ndl.go.jp/dl" flex="1"/>
+                    </hbox>
+                    <hbox align="center">
+                        <label value="Default Result Limit:" control="defaultLimit" style="width: 150px;"/>
+                        <textbox id="defaultLimit" preference="zoteroJisedigiApi.defaultLimit" 
+                                 type="number" value="50" style="width: 100px;"/>
+                    </hbox>
+                </vbox>
+            </groupbox>
+
+            <groupbox>
+                <caption label="Query Options"/>
+                <vbox>
+                    <checkbox id="autoCreateItems" preference="zoteroJisedigiApi.autoCreateItems"
+                              label="Automatically create Zotero items from search results"/>
+                </vbox>
+            </groupbox>
+
+            <groupbox>
+                <caption label="Available APIs"/>
+                <vbox style="font-size: 11px; margin: 10px;">
+                    <html:h4>Illustration APIs (6)</html:h4>
+                    <html:ul>
+                        <html:li>Get Illustration Metadata by ID</html:li>
+                        <html:li>Search Illustrations by Text</html:li>
+                        <html:li>Search Illustrations by Image</html:li>
+                        <html:li>Random Illustration with Facet</html:li>
+                        <html:li>Random Illustration</html:li>
+                        <html:li>Get Multiple Illustrations</html:li>
+                    </html:ul>
+                    
+                    <html:h4>Book APIs (5)</html:h4>
+                    <html:ul>
+                        <html:li>Get Book Metadata by ID</html:li>
+                        <html:li>Search Books</html:li>
+                        <html:li>Get Layout Text Data (ZIP)</html:li>
+                        <html:li>Get Full Text Data (ZIP)</html:li>
+                        <html:li>Get Full Text Data (JSON)</html:li>
+                    </html:ul>
+                    
+                    <html:h4>Page APIs (3)</html:h4>
+                    <html:ul>
+                        <html:li>Get Page Data by ID</html:li>
+                        <html:li>Search Pages</html:li>
+                        <html:li>Get Page Layout Data</html:li>
+                    </html:ul>
+                </vbox>
+            </groupbox>
+        </vbox>
+    </prefpane>
+</prefwindow>

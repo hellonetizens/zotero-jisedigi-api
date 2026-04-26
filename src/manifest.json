@@ -1,0 +1,20 @@
+{
+  "manifest_version": 2,
+  "name": "Zotero Jisedigi API Query",
+  "version": "1.0.0",
+  "description": "Zotero Plugin to query all Jisedigi (NDL Digital Library) APIs - Search books, illustrations, pages, and more",
+  "author": "Zotero Jisedigi Contributors",
+  "homepage_url": "https://github.com/yourusername/zotero-jisedigi-api",
+  "icons": {
+    "48": "chrome/skin/default/zotero-jisedigi/api-icon.svg",
+    "96": "chrome/skin/default/zotero-jisedigi/api-icon.svg"
+  },
+  "applications": {
+    "zotero": {
+      "id": "zotero-jisedigi-api@ndl.go.jp",
+      "update_url": "https://raw.githubusercontent.com/yourusername/zotero-jisedigi-api/main/updates.json",
+      "strict_min_version": "6.999",
+      "strict_max_version": "9.*"
+    }
+  }
+}
