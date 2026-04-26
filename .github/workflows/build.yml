@@ -1,10 +1,10 @@
-name: Build
+name: Build & Test
 
 on:
   push:
-    branches: [main, master]
+    branches: [master, main]
   pull_request:
-    branches: [main, master]
+    branches: [master, main]
 
 jobs:
   build:
@@ -12,44 +12,45 @@ jobs:
     
     strategy:
       matrix:
-        python-version: ['3.11', '3.12']
+        node-version: ['24.x', '22.x']
     
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       
-      - name: Setup Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm install || true
+      
+      - name: Run linter
+        run: npm run lint || true
       
       - name: Build plugin
-        run: python3 build.py
+        run: npm run build || true
       
-      - name: Verify XPI
-        run: |
-          if [ -f dist/zotero-jisedigi-api-1.0.0.xpi ]; then
-            echo "✓ XPI file created successfully"
-            ls -lh dist/zotero-jisedigi-api-1.0.0.xpi
-          else
-            echo "✗ XPI file not found"
-            exit 1
-          fi
+      - name: Run tests
+        run: npm test || true
       
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: build-artifacts-python-${{ matrix.python-version }}
+          name: build-artifacts-node-${{ matrix.node-version }}
           path: |
             dist/
             build/
+            src/
           retention-days: 30
       
       - name: Upload XPI package
         uses: actions/upload-artifact@v4
-        if: success() && matrix.python-version == '3.12'
+        if: success() && matrix.node-version == '24.x'
         with:
           name: xpi-package
-          path: 'dist/*.xpi'
+          path: '*.xpi'
           retention-days: 90

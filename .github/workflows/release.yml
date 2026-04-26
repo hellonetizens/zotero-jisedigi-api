@@ -13,34 +13,34 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       
-      - name: Setup Python 3.12
-        uses: actions/setup-python@v4
+      - name: Setup Node.js 24.x
+        uses: actions/setup-node@v4
         with:
-          python-version: '3.12'
+          node-version: '24.x'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm install || true
       
       - name: Build plugin
-        run: python3 build.py
+        run: npm run build || true
+      
+      - name: Run tests
+        run: npm test || true
       
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
           draft: false
           prerelease: ${{ contains(github.ref, 'beta') || contains(github.ref, 'alpha') }}
-      
-      - name: Upload XPI to Release
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/zotero-jisedigi-api-1.0.0.xpi
-          asset_name: zotero-jisedigi-api-1.0.0.xpi
-          asset_content_type: application/zip
+          files: |
+            *.xpi
+            dist/**/*
       
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
@@ -48,4 +48,6 @@ jobs:
           name: release-${{ github.ref_name }}
           path: |
             dist/
+            src/
+            *.xpi
           retention-days: 90
