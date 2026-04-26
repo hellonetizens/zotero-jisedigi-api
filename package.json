@@ -1,0 +1,25 @@
+{
+  "name": "zotero-jisedigi-api",
+  "version": "1.0.1",
+  "description": "Zotero plugin for JPS WebAPI entity lookup integration",
+  "main": "src/bootstrap.js",
+  "scripts": {
+    "build": "python3 build.py",
+    "dev": "python3 build.py --watch",
+    "package": "python3 build.py && npm run create-xpi",
+    "create-xpi": "cd src && zip -r ../zotero-jisedigi-api.xpi . -x '.git/*' 'node_modules/*'",
+    "lint": "eslint src/**/*.js || true",
+    "test": "echo 'No tests configured'"
+  },
+  "keywords": [
+    "zotero",
+    "jps",
+    "webapi",
+    "entity-lookup"
+  ],
+  "author": "Zotero Plugin Dev",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "eslint": "^8.0.0"
+  }
+}
